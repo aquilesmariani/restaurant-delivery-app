@@ -1,6 +1,6 @@
 const Review = require('../models').Review
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   try {
     const post = await Review
       .create({
@@ -10,6 +10,7 @@ const create = async (req, res) => {
         restaurantId: req.params.restaurantId
       })
     res.status(201).send(post)
+    next()
   } catch (err) {
     console.log('kepasooo2 ', err)
     const msg = err.errors[0].path === 'rating' ? 'Rating must be between 1 and 5' : null
@@ -18,34 +19,18 @@ const create = async (req, res) => {
 }
 
 // GET request
-const list = async (req, res) => {
+const list = async (req, res, next) => {
   try {
     const restaurantList = await Review.findAll({ where: { restaurantId: req.params.restaurantId } })
-    getRating(req.params.restaurantId)
     res.status(200).send(restaurantList)
+    next()
   } catch (err) {
     console.log('curratin', err)
     res.status(400).send(err)
   }
 }
 
-const getRating = async (restaurantId) => {
-  console.log('naranja')
-  const ratings = await Review.findAll({ attributes: ['rating'], where: { restaurantId: restaurantId } })
-  let sum = 0
-  ratings.map((rating) => {
-    console.log('ratin', rating.rating)
-    sum += rating.rating
-    return sum
-  })
-  console.log(sum)
-  const rating = sum / ratings.length
-  console.log(Math.round(rating * 100) / 100)
-  return rating
-}
-
 module.exports = {
   create,
-  list,
-  getRating
+  list
 }
