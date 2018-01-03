@@ -7,11 +7,9 @@ const setRating = async (req, res) => {
   const ratings = await Review.findAll({ attributes: ['rating'], where: { restaurantId: req.params.restaurantId } })
   let sum = 0
   ratings.forEach((rating) => {
-    console.log('ratin', rating.rating)
     sum += rating.rating
     return sum
   })
-  console.log(sum)
   const rating = sum / ratings.length
   await Restaurant
     .update({
@@ -25,9 +23,9 @@ const setRating = async (req, res) => {
 }
 
 // POST request
-const create = async (req, res) => {
+const create = (req, res) => {
   try {
-    const post = await Restaurant
+    Restaurant
       .create({
         logo: req.body.logo,
         legalName: req.body.legalName,
@@ -37,16 +35,16 @@ const create = async (req, res) => {
         address: req.body.address,
         Location: req.body.Location
       })
-    res.status(201).send(post)
+      .then(post => res.status(201).send(post))
   } catch (err) {
     res.status(400).send(err)
   }
 }
 
 // GET request
-const list = async (req, res) => {
+const list = (req, res) => {
   try {
-    const restaurantList = await Restaurant
+    Restaurant
       .findAll({
         include: [{
           model: Meal,
@@ -59,50 +57,57 @@ const list = async (req, res) => {
           ['rating', 'DESC']
         ]
       })
-    res.status(200).send(restaurantList)
+      .then((restaurantList) => {
+        return res.status(200).send([...restaurantList])
+      })
   } catch (err) {
-    console.log(err)
     res.status(400).send(err)
   }
 }
 
 // UPDATE request
-const update = async (req, res) => {
+const update = (req, res) => {
   try {
-    const restById = await Restaurant
+    return Restaurant
       .findById(req.params.restaurantId)
-    if (!restById) {
-      return res.status(400).send({
-        message: 'Restaurant Not Found'
+      .then(restById => {
+        console.log(restById)
+        if (!restById) {
+          return res.status(404).send({
+            message: 'Restaurant Not Found'
+          })
+        }
+
+        return restById.update({
+          logo: req.body.logo || restById.logo,
+          legalName: req.body.legalName || restById.legalName,
+          rating: req.body.rating || restById.rating,
+          commercialEmail: req.body.commercialEmail || restById.commercialEmail,
+          adminNumber: req.body.adminNumber || restById.adminNumber,
+          address: req.body.address || restById.address,
+          Location: req.body.Location || restById.Location
+        })
+          .then(() => res.status(200).send(restById))
       })
-    }
-    restById.update({
-      logo: req.body.logo || restById.logo,
-      legalName: req.body.legalName || restById.legalName,
-      rating: req.body.rating || restById.rating,
-      commercialEmail: req.body.commercialEmail || restById.commercialEmail,
-      adminNumber: req.body.adminNumber || restById.adminNumber,
-      address: req.body.address || restById.address,
-      Location: req.body.Location || restById.Location
-    })
-    res.status(200).send(restById)
   } catch (err) {
-    res.status(400).send(err)
+    res.status(400).send({...err})
   }
 }
 
 // DELETE request
-const destroy = async (req, res) => {
+const destroy = (req, res) => {
   try {
-    const restById = await Restaurant
+    Restaurant
       .findById(req.params.restaurantId)
-    if (!restById) {
-      return res.status(400).send({
-        message: 'Restaurant Not Found'
+      .then(restById => {
+        if (!restById) {
+          return res.status(400).send({
+            message: 'Restaurant Not Found'
+          })
+        }
+        restById.destroy()
+          .then(() => res.status(200).send('Deleted! '))
       })
-    }
-    restById.destroy()
-    res.status(200).send('Deleted! ')
   } catch (err) {
     res.status(400).send(err)
   }
