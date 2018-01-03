@@ -59,7 +59,7 @@ const list = async (req, res) => {
           ['rating', 'DESC']
         ]
       })
-    res.status(201).send(restaurantList)
+    res.status(200).send(restaurantList)
   } catch (err) {
     console.log(err)
     res.status(400).send(err)
@@ -102,7 +102,7 @@ const destroy = async (req, res) => {
       })
     }
     restById.destroy()
-    res.status(201).send('Deleted! ')
+    res.status(200).send('Deleted! ')
   } catch (err) {
     res.status(400).send(err)
   }

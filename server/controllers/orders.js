@@ -34,7 +34,7 @@ module.exports = {
               .then(order =>
                 orderMeal.create(order.id, req.body.meals)
                   .then((a) => {
-                    messaging.sendMessage(`Order created, ETA: ${eta}`)
+                    messaging.sendMessage(`Order created with id: ${order.id}, ETA: ${eta}`)
                     return res.status(201).send({
                       eta: eta
                     })

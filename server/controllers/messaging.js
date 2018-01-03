@@ -6,7 +6,7 @@ const sendMessage = (message) => {
       if (err) {
         throw new Error(err)
       }
-      const q = 'hello'
+      const q = 'order'
 
       ch.assertQueue(q, {durable: false})
       ch.sendToQueue(q, Buffer.from(message))
