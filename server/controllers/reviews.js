@@ -12,7 +12,6 @@ const create = async (req, res, next) => {
     res.status(201).send(post)
     next()
   } catch (err) {
-    console.log('kepasooo2 ', err)
     const msg = err.errors[0].path === 'rating' ? 'Rating must be between 1 and 5' : null
     res.status(400).send(msg || err)
   }
@@ -25,7 +24,6 @@ const list = async (req, res, next) => {
     res.status(200).send(restaurantList)
     next()
   } catch (err) {
-    console.log('curratin', err)
     res.status(400).send(err)
   }
 }

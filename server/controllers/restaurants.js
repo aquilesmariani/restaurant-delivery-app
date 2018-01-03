@@ -29,7 +29,6 @@ const create = async (req, res) => {
   try {
     const post = await Restaurant
       .create({
-        title: req.body.title,
         logo: req.body.logo,
         legalName: req.body.legalName,
         rating: req.body.rating,
@@ -78,7 +77,6 @@ const update = async (req, res) => {
       })
     }
     restById.update({
-      title: req.body.title || restById.title,
       logo: req.body.logo || restById.logo,
       legalName: req.body.legalName || restById.legalName,
       rating: req.body.rating || restById.rating,
