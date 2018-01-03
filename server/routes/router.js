@@ -12,6 +12,8 @@ router.post('/restaurants/:restaurantId/reviews', controller.reviews.create, con
 router.get('/restaurants/:restaurantId/reviews', controller.reviews.list)
 router.post('/restaurants/:restaurantId/meals', controller.meals.create)
 
+router.post('/restaurants/:restaurantId/orders', controller.orders.create)
+
 router.get('*', (req, res) => res.status(404).send('The page you requested does not exist.'))
 
 module.exports = router

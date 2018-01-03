@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'restaurantId',
       onDelete: 'CASCADE'
     })
+    Meal.hasMany(models.OrderMeal)
   }
   return Meal
 }
