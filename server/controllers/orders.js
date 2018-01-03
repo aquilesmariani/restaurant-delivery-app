@@ -10,7 +10,6 @@ module.exports = {
   create (req, res) {
     let clientLocation = req.body.location
     let eta = '0 mins'
-    console.log(orderMeal)
     Restaurant.findById(req.params.restaurantId)
       .then(restById => {
         googleMapsClient.directions({

@@ -1,10 +1,13 @@
 # restaurant-delivery-app
 
 to get db working with PostgreSQL
+you must get installed PostgreSQL server and have created a `restaurants` DB
 
-`sequelize db:migrate`
-`sequelize db:seed:all`
+`yarn` or `npm install`
 
-uses rabbitMQ
+- `node_modules/.bin/sequelize db:migrate`
+- `node_modules/.bin/sequelize dbseed:all`
 
-Start server: `npm run start:dev`
+need to have installed and running rabbitMQ to save message queues
+
+Start server: `database="restaurants" host="127.0.0.1" username={your_db_user} password={your_db_pass} npm run start:dev`

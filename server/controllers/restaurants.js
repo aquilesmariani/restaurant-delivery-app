@@ -71,7 +71,6 @@ const update = (req, res) => {
     return Restaurant
       .findById(req.params.restaurantId)
       .then(restById => {
-        console.log(restById)
         if (!restById) {
           return res.status(404).send({
             message: 'Restaurant Not Found'

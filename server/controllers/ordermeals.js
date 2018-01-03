@@ -9,7 +9,6 @@ module.exports = {
         Meal.findById(meal.id)
           .then(mealById => {
             if (mealById) {
-              console.log('creating ', mealById.name)
               OrderMeal
                 .create({
                   orderId,
