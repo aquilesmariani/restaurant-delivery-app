@@ -7,8 +7,10 @@ const config = require(`${__dirname}/../config/config.json`)[env]
 const db = {}
 
 let sequelize
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable])
+console.log(process.env['use_env_variable'])
+if (process.env['use_env_variable']) {
+  console.log('test asdfdsa', process.env['use_env_variable'])
+  sequelize = new Sequelize(process.env['database'], process.env['username'], process.env['password'], config)
 } else {
   sequelize = new Sequelize(
     config.database, config.username, config.password, config

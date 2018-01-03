@@ -1,7 +1,8 @@
 {
+  "use_env_variable": true,
   "development": {
     "username": "postgres",
-    "password": "chaqui12",
+    "password": "chaqui123",
     "database": "restaurants",
     "host": "127.0.0.1",
     "dialect": "postgres"
