@@ -13,7 +13,7 @@
   "dependencies": {
     "@google/maps": "^0.4.5",
     "amqplib": "^0.5.2",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "pg": "^7.4.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.15.1",
